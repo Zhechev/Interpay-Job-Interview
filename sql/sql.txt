@@ -1,0 +1,17 @@
+// Create table
+
+CREATE TABLE public.books
+(
+    id serial,
+    author character(255),
+    name character(255),
+    date_added timestamp without time zone,
+    PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+);
+
+ALTER TABLE public.books
+    OWNER to postgres;
+

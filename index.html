@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset=utf-8>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <title>Title</title>
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+            <table class="table" id="booksTable" border="1" >
+                <tr>
+                    <th class="text-center">Author</th>
+                    <th class="text-center">Book</th>
+                </tr>
+            </table>
+        </div>
+
+        <div class="col-md-3">
+            <form>
+                <div class="form-group">
+                    <label for="search">Search..</label>
+                    <input type="search" class="form-control" id="search" aria-describedby="searhHelp" placeholder="Enter something">
+                    <small id="searchHelp" class="form-text text-muted">You can search only by author</small>
+                </div>
+                <button type="submit" id="searchButton" class="btn btn-primary">Search</button>
+            </form>
+            <table class="table hidden" id="booksSearchTable" border="1" >
+                <thead>
+                    <tr>
+                        <th class="text-center">Author</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+
+<script>
+
+    $(document).ready(function() {
+        $.ajax({
+            url: 'start.php',
+            type: 'get',
+            dataType: 'JSON',
+            success: function(books) {
+                var len = books.length;
+                for (var i = 0; i < len; i++) {
+                    var author = books[i].author;
+                    var name = books[i].name;
+
+                    var tr = "<tr>" +
+                        "<td align='center'>" + author + "</td>" +
+                        "<td align='center'>" + name + "</td>";
+
+                    $("#booksTable").append(tr);
+                }
+            },
+            type: 'GET'
+        });
+    });
+
+    $("#searchButton").click(function(e) {
+        e.preventDefault();
+        $("#booksSearchTable tbody tr").remove();
+        $.ajax({
+            url: 'start.php?search=true',
+            data: {
+                searchText: $("#search").val()
+            },
+            type: 'get',
+            dataType: 'JSON',
+            success: function(books) {
+                console.log(books);
+                var len = books.length;
+                for (var i = 0; i < len; i++) {
+                    var author = books[i].author;
+
+                    var tr = "<tr>" +
+                        "<td align='center'>" + author + "</td>"
+
+                    $("#booksSearchTable").append(tr);
+                }
+                $("#booksSearchTable").removeClass('hidden');
+            },
+            type: 'GET'
+        });
+    });
+
+</script>

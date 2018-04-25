@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<books>
+	<book>
+		<author>Директория 2</author>
+		<name>А. А.</name>
+	</book>
+	<book>
+		<author>Korean book</author>
+		<name>한국어/韓國語</name>
+	</book>
+	<book>
+		<author>Директория 2</author>
+		<name>А. А.</name>
+	</book>
+</books>
